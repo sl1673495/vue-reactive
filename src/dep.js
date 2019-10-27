@@ -1,5 +1,6 @@
 export default class Dep {
-  constructor() {
+  constructor(key) {
+    this.key = key
     this.deps = new Set()
   }
 
