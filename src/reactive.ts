@@ -1,8 +1,8 @@
 import Dep from './dep'
-import { isObject } from '../utils'
+import { isObject } from './utils'
 
 // 将对象定义为响应式
-export default function reactive(data) {
+export default function reactive<T extends object>(data: T): T{
   if (isObject(data)) {
     Object.keys(data).forEach(key => {
       defineReactive(data, key)
@@ -11,7 +11,7 @@ export default function reactive(data) {
   return data
 }
 
-function defineReactive(data, key) {
+function defineReactive(data: object, key: string): void {
   let val = data[key]
   const dep = new Dep()
 
@@ -26,7 +26,5 @@ function defineReactive(data, key) {
     }
   })
 
-  if (isObject(val)) {
-    reactive(val)
-  }
+  reactive(val)
 }

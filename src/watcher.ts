@@ -1,7 +1,21 @@
 import Dep, { pushTarget, popTarget } from './dep'
+import { watchCallback } from './watch'
+
+interface WatcherOptions {
+  computed?: boolean
+  watch?: boolean
+  callback?: watchCallback
+}
 
 export default class Watcher {
-  constructor(getter, options = {}) {
+  getter: Function
+  computed: boolean
+  value: any
+  watch?: boolean
+  callback?: watchCallback
+  dep?: Dep
+
+  constructor(getter: Function, options: WatcherOptions = {}) {
     const { computed, watch, callback } = options
     this.getter = getter
     this.computed = computed
@@ -25,7 +39,7 @@ export default class Watcher {
 
   // 仅为computed使用
   depend() {
-    this.dep.depend(this)
+    this.dep.depend()
   }
 
   update() {
@@ -35,7 +49,7 @@ export default class Watcher {
     } else if (this.watch) {
       const oldValue = this.value
       this.get()
-      this.callback(oldValue, this.value)
+      this.callback(this.value, oldValue)
     } else {
       this.get()
     }

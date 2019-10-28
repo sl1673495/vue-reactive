@@ -1,6 +1,9 @@
 import Watcher from './watcher'
 
-export default function computed(getter) {
+type computedRef = {
+  value?: any
+}
+export default function computed(getter: Function): computedRef {
   let def = {}
   const computedWatcher = new Watcher(getter, { computed: true })
   Object.defineProperty(def, 'value', {

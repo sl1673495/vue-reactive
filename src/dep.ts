@@ -1,6 +1,11 @@
+import Watcher from './watcher'
+
 export default class Dep {
-  constructor(key) {
-    this.key = key
+  static target: null | Watcher
+
+  deps: Set<Watcher>
+
+  constructor() {
     this.deps = new Set()
   }
 
@@ -15,12 +20,11 @@ export default class Dep {
   }
 }
 
-Dep.target = null
 const targetStack = []
 
-export function pushTarget(_target) {
+export function pushTarget(currentTarget: Watcher) {
   if (Dep.target) targetStack.push(Dep.target)
-  Dep.target = _target
+  Dep.target = currentTarget
 }
 
 export function popTarget() {
