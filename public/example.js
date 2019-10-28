@@ -18,6 +18,7 @@ new Watcher(() => {
 new Watcher(() => {
   document.getElementById('app2').innerHTML = `
   <p>请在控制台改变data.number尝试computed效果</p>
+  <p>data.number现在是${data.number}</p>
     computed: 1 + number 是 ${numberPlusOne.value}
   `
 })
