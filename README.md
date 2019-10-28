@@ -12,13 +12,15 @@ import { reactive, computed, watch, Watcher } from '../src'
 
 const data = reactive({
   msg: 'Hello World',
-  number: 1
+  number: 1,
 })
 
 const numberPlusOne = computed(() => data.number + 1)
 
 new Watcher(() => {
   document.getElementById('app').innerHTML = `
+    <p>当前data的状态是：</p>
+    ${JSON.stringify(data)}
     <p>请在控制台输入data，分别改变data.msg尝试效果</p>
     <p>data.msg被watch了，可以打印出新旧值的变化</p>
     msg is ${data.msg} <br>
@@ -35,11 +37,14 @@ new Watcher(() => {
 
 watch(
   () => data.msg,
-  (old, newVal) => {
-    console.log('old: ', old)
+  (newVal, oldVal) => {
     console.log('newVal: ', newVal)
+    console.log('old: ', oldVal)
   }
 )
 
-window.data = data
+;(window as any).data = data
 ```
+
+## 版本
+已经全面使用ts重构，js版本请查看标签`js-version`
