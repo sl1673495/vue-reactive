@@ -5,13 +5,13 @@ import { isObject } from './utils'
 export default function reactive<T extends object>(data: T): T{
   if (isObject(data)) {
     Object.keys(data).forEach(key => {
-      defineReactive(data, key)
+      defineReactive(data, key as any)
     })
   }
   return data
 }
 
-function defineReactive(data: object, key: string): void {
+function defineReactive<T extends object, K extends keyof T>(data: T, key: K): void {
   let val = data[key]
   const dep = new Dep()
 
@@ -26,5 +26,7 @@ function defineReactive(data: object, key: string): void {
     }
   })
 
-  reactive(val)
+  if (isObject(val)) {
+    reactive(val)
+  }
 }

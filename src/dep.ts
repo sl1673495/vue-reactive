@@ -1,7 +1,7 @@
 import Watcher from './watcher'
 
 export default class Dep {
-  static target: null | Watcher
+  static target: Watcher | null | undefined
 
   deps: Set<Watcher>
 
@@ -20,7 +20,7 @@ export default class Dep {
   }
 }
 
-const targetStack = []
+const targetStack: Watcher[] = []
 
 export function pushTarget(currentTarget: Watcher) {
   if (Dep.target) targetStack.push(Dep.target)

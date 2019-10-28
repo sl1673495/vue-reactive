@@ -16,7 +16,12 @@ export default class Watcher {
   dep?: Dep
 
   constructor(getter: Function, options: WatcherOptions = {}) {
-    const { computed, watch, callback } = options
+    const { 
+      computed = false, 
+      watch = false, 
+      callback 
+    } = options
+    
     this.getter = getter
     this.computed = computed
     this.watch = watch
@@ -39,17 +44,19 @@ export default class Watcher {
 
   // 仅为computed使用
   depend() {
-    this.dep.depend()
+    this.dep!.depend()
   }
 
   update() {
     if (this.computed) {
       this.get()
-      this.dep.notify()
+      this.dep!.notify()
     } else if (this.watch) {
       const oldValue = this.value
       this.get()
-      this.callback(this.value, oldValue)
+      if (this.callback) {
+        this.callback(this.value, oldValue)
+      }
     } else {
       this.get()
     }
