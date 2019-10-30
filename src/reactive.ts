@@ -5,7 +5,7 @@ import { isObject } from './utils'
 export default function reactive<T extends object>(data: T): T{
   if (isObject(data)) {
     Object.keys(data).forEach(key => {
-      defineReactive(data, key as any)
+      defineReactive(data, key as keyof T)
     })
   }
   return data
