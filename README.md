@@ -46,5 +46,8 @@ watch(
 ;(window as any).data = data
 ```
 
+## 源码解读
+[手把手带你实现一个最精简的响应式系统来学习Vue的data、computed、watch实现](https://juejin.im/post/5db6433b51882564912fc30f)
+
 ## 版本
 已经全面使用ts重构，js版本请查看标签`js-version`
